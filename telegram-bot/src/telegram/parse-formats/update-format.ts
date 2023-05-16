@@ -1,0 +1,1 @@
+export const updateFormat = ['id', 'name', 'author', 'description'] as const;

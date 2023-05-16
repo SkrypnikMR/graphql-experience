@@ -1,0 +1,12 @@
+.container {
+    height: auto;
+    padding: 25px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    min-height: 40vh;
+    position: relative;
+}

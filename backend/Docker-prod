@@ -1,0 +1,8 @@
+FROM node:14-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+COPY dist ./dist
+ENV PORT ${BACKEND_PORT}
+EXPOSE ${BACKEND_PORT}
+CMD ["npm", "run", "start:prod"]

@@ -1,0 +1,32 @@
+.error-boundary-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .error-message {
+    font-weight: bold;
+    color: #6c757d;
+    margin-bottom: 1rem;
+  }
+  
+  .reload-button {
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .reload-button:hover {
+    background-color: #0056b3;
+  }
+  

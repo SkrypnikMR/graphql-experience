@@ -1,0 +1,8 @@
+.face-svg {
+  stroke: var(--primary-color);
+  fill: var(--primary-colorr);
+}
+
+.face-svg, circle {
+  stroke: var(--primary-color);
+}

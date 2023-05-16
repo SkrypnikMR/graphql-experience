@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "target": "ES2019",
+    "strict": false,
+    "moduleResolution": "node",
+    "skipLibCheck": true
+  },
+  "include": ["scripts/fetch-json-gql-types.ts"]
+}

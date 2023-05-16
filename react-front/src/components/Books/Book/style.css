@@ -1,0 +1,204 @@
+.book-card {
+    width: 249px;
+    height: 357px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 48px;
+    position: relative;
+    perspective: 1000px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.book-card-back {
+    background-color: var(--primary-color);
+}
+
+.book-card-inner,
+.book-card-pages::before,
+.book-card-pages::after {
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform-origin: left center;
+    transition: transform 0.2s ease-in;
+}
+
+.book-card-pages:before{
+    background-color: yellow;
+}
+
+.book-card-cover,
+.book-card-pages {
+    transform-style: preserve-3d;
+}
+
+.book-card-pages {
+    transform: scale(0.95, 0.9);
+    perspective: 2000px;
+}
+
+.book-card-pages::before,
+.book-card-pages::after {
+    background-color: #fff;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.075) 97%, transparent);
+    box-shadow: 1px 4px 5px 0 rgba(0, 0, 0, 0.05);
+    content: "";
+}
+
+.book-card-cover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.book-card-back,
+.book-card-pages {
+    right: 0;
+    bottom: 0;
+}
+
+.book-card-pages::after {
+    transition-delay: 0.12s;
+}
+
+.book-card-pages::before {
+    transition-delay: 0.105s;
+}
+
+.book-card-pages + .book-card-pages::after {
+    transition-delay: 0.09s;
+}
+
+.book-card-pages + .book-card-pages::before {
+    transition-delay: 0.075s;
+}
+
+.book-card-pages + .book-card-pages + .book-card-pages::after {
+    transition-delay: 0.06s;
+}
+
+.book-card-pages + .book-card-pages + .book-card-pages::before {
+    transition-delay: 0.045s;
+}
+
+.book-card-pages + .book-card-pages + .book-card-pages + .book-card-pages::after {
+    transition-delay: 0.03s;
+}
+
+.book-card-pages + .book-card-pages + .book-card-pages + .book-card-pages::before {
+    transition-delay: 0.015s;
+}
+
+.book-card:hover .book-card-back,
+.book-card:hover .book-card-cover::before {
+    box-shadow: inset -2px 0 1px rgba(0, 0, 0, 0.075);
+}
+
+.book-card:hover .book-card-cover {
+    transform: rotateY(-40deg);
+    transform-timing-function: ease-out;
+    transition-delay: 0s;
+}
+
+.book-card:hover .book-card-pages::after {
+    transform: rotateY(-12deg);
+}
+
+.book-card:hover .book-card-pages::before {
+    transform: rotateY(-8deg);
+}
+
+.book-card:hover .book-card-pages + .book-card-pages::after {
+    transform: rotateY(-20deg);
+}
+
+.book-card:hover .book-card-pages + .book-card-pages::before {
+    transform: rotateY(-16deg);
+}
+
+.book-card:hover .book-card-pages + .book-card-pages + .book-card-pages::after {
+    transform: rotateY(-28deg);
+}
+
+.book-card:hover .book-card-pages + .book-card-pages + .book-card-pages::before {
+    transform: rotateY(-24deg);
+}
+
+.book-card:hover .book-card-pages + .book-card-pages + .book-card-pages + .book-card-pages::after {
+    transform: rotateY(-36deg);
+}
+
+.book-card-inner-last {
+    width: 192.5px;
+    background-color: var(--primary-color);
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    gap: 20px;
+}
+
+
+.book-card-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.1rem;
+    width: 80%;
+    text-align: center;
+}
+
+.book-card-author {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.book-card-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    width: 80%;
+}
+
+.book-card-dates {
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.book-card-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.book-card-modal > div {
+    width: 100%;
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.delete-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}

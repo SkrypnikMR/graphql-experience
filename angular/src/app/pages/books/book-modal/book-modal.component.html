@@ -1,0 +1,37 @@
+<div *ngIf="book$ | async as book" class="modal-container d-flex flex-column justify-content-end">
+  <div  class="modal-header bg-primary text-white">
+    <h4 class="modal-title">{{ book?.name }}</h4>
+    <button type="button" class="btn btn-danger btn-sm" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <ng-container *ngIf="isEditing; else bookInfo">
+    <div class="modal-body">
+      <book-form [submitForm]="onFormSubmit" [preparedModel]="book"></book-form>
+    </div>
+  </ng-container>
+  <ng-template #bookInfo>
+    <div class="modal-body">
+        <div class="card-body">
+          <h5 class="card-title text-white truncate" [title]="book.name">{{book.name}}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Created by: {{book.author}}</li>
+          <li class="list-group-item">Created at: {{book.createdAt | date: 'short' }}</li>
+          <li class="list-group-item">Updated at: {{book.updatedAt | date: 'short'}} </li>
+          <li  *ngIf="book.description" class="list-group-item">Description: {{book.description }} </li>
+        </ul>
+      </div>
+  </ng-template>
+  <div class="modal-footer">
+    <div class="d-flex justify-content-end gap-3">
+      <ng-container *ngIf="!isEditing; else cancel">
+        <button type="button" class="btn btn-danger" (click)="onEdit()">Edit</button>
+      </ng-container>
+      <ng-template #cancel>
+        <button type="button" class="btn text-primary bg-white btn-outline-primary" (click)="onCancel()">Cancel</button>
+      </ng-template>
+      <button type="button" class="btn btn-danger" (click)="onDelete(book.id)">Delete</button>
+    </div>
+  </div>
+</div>

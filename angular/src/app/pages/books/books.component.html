@@ -1,0 +1,18 @@
+<div *ngIf="books$ | async as books" class="d-flex flex-row flex-wrap pt-4 gap-5 px-5">
+  <div *ngFor="let b of books">
+    <div class="card book-card bg-primary col">
+      <div class="card-body">
+        <h5 class="card-title text-white truncate" [title]="b.name">{{b.name}}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><span>Created by</span>: {{b.author}}</li>
+        <li class="list-group-item"><span>Created at</span>: {{b.createdAt | date: 'short' }}</li>
+        <li class="list-group-item"><span>Updated at</span>: {{b.updatedAt | date: 'short'}}</li>
+      </ul>
+      <div class="card-footer d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="openModal(b.id)">Full info</button>
+      </div>
+    </div>
+  </div>
+</div>
+

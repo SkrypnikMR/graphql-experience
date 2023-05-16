@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  reverse-proxy:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf.prod:/etc/nginx/nginx.conf.prod
+      - ./certs:/certs
+    depends_on:
+      - backend
+      - angular
+      - react
+      - telegram-bot
+      - acme.sh
+    env_file:
+      - .env
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  db:
+    container_name: postgres-lesson-1
+    image: postgres:14.0-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPEORM_DB}
+      - TYPEORM_PORT=${TYPEORM_PORT}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - ${TYPEORM_PORT}:${TYPEORM_PORT}
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Docker-prod
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT}
+      - BACKEND_HOST=${BACKEND_HOST}
+      - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+      - TYPEORM_USERNAME=${TYPEORM_USERNAME}
+      - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+      - TYPEORM_DB=${TYPEORM_DB}
+      - TYPEORM_PORT=${TYPEORM_PORT}
+      - TYPEORM_HOST=db
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+
+  angular:
+    container_name: angular-front
+    build:
+      context: ./angular
+      dockerfile: Docker-build
+    restart: unless-stopped
+    environment:
+      - ANGULAR_PORT=${ANGULAR_PORT}
+    ports:
+      - ${ANGULAR_PORT}:${ANGULAR_PORT}
+
+  react:
+    container_name: react-front
+    build:
+      context: ./react-front
+      dockerfile: Docker-prod
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PORT=${REACT_APP_REACT_PORT}
+      - VITE_GRAPHQL_SERVER_URL=${VITE_GRAPHQL_SERVER_URL}
+    ports:
+      - ${REACT_APP_REACT_PORT}:${REACT_APP_REACT_PORT}
+
+  telegram-bot:
+    container_name: nest-telegram-bot
+    depends_on:
+      - backend
+    build:
+      context: ./telegram-bot
+      dockerfile: Docker-prod
+    restart: unless-stopped
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT}
+      - BACKEND_HOST=backend
+      - BOT_PORT=${BOT_PORT}
+      - BOT_TOKEN=${BOT_TOKEN}
+
+  acme.sh:
+    image: neilpang/acme.sh
+    env_file:
+      - .env
+    volumes:
+      - ./acme.sh:/acme.sh
+      - ./certs:/acme.sh
+    environment:
+      - DuckDNS_Token=${DUCKDNS_TOKEN}
+      - DEPLOY_DNS_SLEEP=60
+      - DUCKDNS_DOMAIN=${DUCKDNS_DOMAIN}
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do export DuckDNS_Token=${DUCKDNS_TOKEN}; /root/.acme.sh/acme.sh --register-account -m skripnikmrw@gmail.com; /root/.acme.sh/acme.sh --issue -d ${DUCKDNS_DOMAIN} --dns dns_duckdns --reloadcmd \"nginx -s reload\"; sleep 12h & wait $${!}; done;'"
+
+
+
+
+
