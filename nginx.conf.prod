@@ -18,7 +18,7 @@ http {
     server_name ${DUCKDNS_DOMAIN};
 
     ssl_certificate /certs/fullchain.cer;
-    ssl_certificate_key /certs/skrip-gql-exp.duckdns.org.key;
+    ssl_certificate_key /certs/${DUCKDNS_DOMAIN}.key;
     ssl_trusted_certificate /certs/ca.cer;
 
     location / {
