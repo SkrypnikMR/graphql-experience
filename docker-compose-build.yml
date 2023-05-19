@@ -20,7 +20,7 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   db:
-    container_name: postgres-lesson-1
+    container_name: postgres-gql-exp
     image: postgres:14.0-alpine
     restart: always
     environment:
@@ -49,6 +49,10 @@ services:
       - TYPEORM_DB=${TYPEORM_DB}
       - TYPEORM_PORT=${TYPEORM_PORT}
       - TYPEORM_HOST=db
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_RECEIVER=${EMAIL_RECEIVER}
+      - LOGGING_TIMEOUT=${LOGGING_TIMEOUT}
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
 
