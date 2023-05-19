@@ -7,6 +7,8 @@ import * as cors from 'cors';
 
 import { typeormFactory } from './typeorm.factory';
 import { BooksModule } from './books/books.module';
+import { RequestLoggingMiddleware } from './request-logging/request-logging.middleware';
+import { RequestLoggingModule } from './request-logging/request-logging.module';
 
 @Module({
   imports: [
@@ -24,10 +26,11 @@ import { BooksModule } from './books/books.module';
       autoTransformHttpErrors: true,
     }),
     BooksModule,
+    RequestLoggingModule,
   ],
 })
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(cors()).forRoutes('*');
+    consumer.apply(cors(), RequestLoggingMiddleware).forRoutes('*');
   }
 }
