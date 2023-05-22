@@ -11,4 +11,8 @@ export const typeormFactory = async (config: ConfigService) => ({
   synchronize: true,
   autoLoadEntities: true,
   logging: true,
+  migrations: [__dirname + '/../migrations/*{.ts,.js}'],
+  cli: {
+    migrationsDir: 'migrations',
+  },
 });
